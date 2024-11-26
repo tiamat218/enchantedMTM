@@ -14,29 +14,24 @@ class OllamaService: @unchecked Sendable {
     var ollamaKit: OllamaKit
     
     init() {
-        ollamaKit = OllamaKit(baseURL: URL(string: "http://localhost:11434")!)
+        
+        ollamaKit = OllamaKit(baseURL: URL(string: "https://ollama.laconic.blackblocks.io")!)
         initEndpoint()
     }
     
-    func initEndpoint(url: String? = nil, bearerToken: String? = "okki") {
-        let defaultUrl = "http://localhost:11434"
-        let localStorageUrl = UserDefaults.standard.string(forKey: "ollamaUri")
-        let bearerToken = UserDefaults.standard.string(forKey: "ollamaBearerToken")
-        if var ollamaUrl = [localStorageUrl, defaultUrl].compactMap({$0}).filter({$0.count > 0}).first {
-            if !ollamaUrl.contains("http") {
-                ollamaUrl = "http://" + ollamaUrl
-            }
-            
-            if let url = URL(string: ollamaUrl) {
-                ollamaKit =  OllamaKit(baseURL: url, bearerToken: bearerToken)
-                return
-            }
+    func initEndpoint() {
+        
+        let fixedUrl = "https://ollama.laconic.blackblocks.io"
+        let fixedBearerToken = "" 
+
+        if let url = URL(string: fixedUrl) {
+            ollamaKit = OllamaKit(baseURL: url, bearerToken: fixedBearerToken)
         }
     }
     
     func getModels() async throws -> [LanguageModel]  {
         let response = try await ollamaKit.models()
-        let models = response.models.map{
+        let models = response.models.map {
             LanguageModel(
                 name: $0.name,
                 provider: .ollama,
