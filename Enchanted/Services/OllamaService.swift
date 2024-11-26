@@ -15,13 +15,13 @@ class OllamaService: @unchecked Sendable {
     
     init() {
         
-        ollamaKit = OllamaKit(baseURL: URL(string: "https://ollama.laconic.blackblocks.io")!)
+        ollamaKit = OllamaKit(baseURL: URL(string: "https://mtm.ab.vaasl.io")!)
         initEndpoint()
     }
     
     func initEndpoint() {
         
-        let fixedUrl = "https://ollama.laconic.blackblocks.io"
+        let fixedUrl = "https://mtm.ab.vaasl.io"
         let fixedBearerToken = "" 
 
         if let url = URL(string: fixedUrl) {
